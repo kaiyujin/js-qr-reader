@@ -2,9 +2,9 @@
   <div>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
 
-    <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
+    <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit" :track="paintOutline">
       <div v-if="validationFailure" class="validation-failure">
-        This is NOT a URL!
+        URLではないQRコードです。
       </div>
 
       <div v-if="validationPending" class="validation-pending">
@@ -81,7 +81,25 @@ export default {
       return new Promise(resolve => {
         window.setTimeout(resolve, ms)
       })
+    },
+
+    paintOutline (detectedCodes, ctx) {
+      for (const detectedCode of detectedCodes) {
+        const [ firstPoint, ...otherPoints ] = detectedCode.cornerPoints
+
+        ctx.strokeStyle = "red";
+
+        ctx.beginPath();
+        ctx.moveTo(firstPoint.x, firstPoint.y);
+        for (const { x, y } of otherPoints) {
+          ctx.lineTo(x, y);
+        }
+        ctx.lineTo(firstPoint.x, firstPoint.y);
+        ctx.closePath();
+        ctx.stroke();
+      }
     }
+
   }
 }
 </script>
