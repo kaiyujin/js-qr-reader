@@ -1,5 +1,8 @@
 # js-qr-reader
 
+## Demo
+https://sharp-jones-2a8a1a.netlify.app/
+
 ## Project setup
 ```
 yarn install
