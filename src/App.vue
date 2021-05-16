@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="decode-result">Last result: <b>{{ result }}</b></p>
+    <p class="decode-result">QRコードのデータ: <b>{{ result }}</b></p>
 
     <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit" :track="paintOutline">
       <div v-if="validationFailure" class="validation-failure">
